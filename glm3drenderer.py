@@ -7,8 +7,6 @@ from renderclasses import *
 from objfiles import *
 from levelexporter import *
 
-near = 0.1
-
 plr = player(
     glm.vec3(0, 5, 15), glm.vec2(0, 0), 15
 )
@@ -43,9 +41,11 @@ starttime = time.time()
     h
 )"""
 
-importmap("C:\\Users\\User\\Downloads\\glmrenderer\\maps\\map1.txt", 5, objects, plr, lightsources)
+importmap("glmrenderer\ByteBlast\maps\map1.txt", 5, objects, plr, lightsources)
 
 print(time.time() - starttime)
+
+#objects.append(triangle(glm.vec3(-5, 0, 5),glm.vec3(5, 0, 5),glm.vec3(-5, 0, -5),glm.vec3(0, 1, 0),glm.vec3(1, 1, 1),2,))  #test triangle
 
 ambient = light(glm.vec3(0, 0, 0), 0, glm.vec3(1, 1, 1))
 
@@ -175,6 +175,8 @@ objects.append(enemy(glm.vec3(0, -5, 10), 3, 1)) #the og
 
 fov = 90
 distance = 1 / mt.tan(fov / 360 * mt.pi)
+
+near = distance
 
 pg.mouse.set_pos(w / 2, h / 2)
 

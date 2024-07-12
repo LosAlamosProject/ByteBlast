@@ -58,7 +58,7 @@ class enemy:
         self.speed = speed
         self.type = type
         self.facing = glm.vec3(1, 0, 0)
-        self.texture = pg.image.load("C:\\Users\\User\\Downloads\\glmrenderer\\images\\demon.png")
+        self.texture = pg.image.load("glmrenderer\ByteBlast\images\demon.png")
         self.texture = pg.transform.scale(self.texture, (500, 500))
         self.texsize = glm.vec2(500, 500)
         self.center = pos.z
@@ -128,11 +128,7 @@ class triangle:
             (self.a.z + self.b.z + self.c.z) / 3,
         )
 
-        if trianglefrustum(self.rota, self.rotb, self.rotc, distance, w, h, near):
-            color = self.shade(avgpos, lightsources, ambient, plr)
-
-            return self.frustumdraw(screen, self.rota, self.rotb, self.rotc, color, distance, near, w, h)
-        return 0
+        return self.frustumdraw(screen, self.rota, self.rotb, self.rotc, distance, near, w, h, avgpos, lightsources, ambient, plr)
     
     def shade(self, avgpos, lightsources, ambient, plr):
         color = self.clr * ambient.color * ambient.brightness
@@ -159,13 +155,15 @@ class triangle:
 
         return color
 
-    def frustumdraw(self, screen, a, b, c, color, distance, near, w, h):
+    def frustumdraw(self, screen, a, b, c, distance, near, w, h, avgpos, lightsources, ambient, plr):
         if a.z<=-near and b.z<=-near and c.z<=-near:
             pos1 = proj(a, distance, w, h)
             pos2 = proj(b, distance, w, h)
             pos3 = proj(c, distance, w, h)
-            pg.draw.polygon(screen, color * 255, (pos1, pos2, pos3))   #bolji near face
-            return 1
+            if trianglefrustum(pos1, pos2, pos3, w, h):
+                color = self.shade(avgpos, lightsources, ambient, plr)
+                pg.draw.polygon(screen, color * 255, (pos1, pos2, pos3))
+                return 1
         
         if a.z<=-near and b.z>-near and c.z>-near:
             abdir = (b-a)
@@ -180,8 +178,10 @@ class triangle:
             pos1 = proj(a, distance, w, h)
             pos2 = proj(binterpoint, distance, w, h)
             pos3 = proj(cinterpoint, distance, w, h)
-            pg.draw.polygon(screen, color * 255, (pos1, pos2, pos3))
-            return 1
+            if trianglefrustum(pos1, pos2, pos3, w, h):
+                color = self.shade(avgpos, lightsources, ambient, plr)
+                pg.draw.polygon(screen, color * 255, (pos1, pos2, pos3)) 
+                return 1
         
         if a.z>-near and b.z<=-near and c.z>-near:
             badir = (a-b)
@@ -196,8 +196,10 @@ class triangle:
             pos1 = proj(ainterpoint, distance, w, h)
             pos2 = proj(b, distance, w, h)
             pos3 = proj(cinterpoint, distance, w, h)
-            pg.draw.polygon(screen, color * 255, (pos1, pos2, pos3))
-            return 1
+            if trianglefrustum(pos1, pos2, pos3, w, h):
+                color = self.shade(avgpos, lightsources, ambient, plr)
+                pg.draw.polygon(screen, color * 255, (pos1, pos2, pos3))
+                return 1
         
         if a.z>-near and b.z>-near and c.z<=-near:
             cadir = (a-c)
@@ -212,8 +214,10 @@ class triangle:
             pos1 = proj(ainterpoint, distance, w, h)
             pos2 = proj(binterpoint, distance, w, h)
             pos3 = proj(c, distance, w, h)
-            pg.draw.polygon(screen, color * 255, (pos1, pos2, pos3))
-            return 1
+            if trianglefrustum(pos1, pos2, pos3, w, h):
+                color = self.shade(avgpos, lightsources, ambient, plr)
+                pg.draw.polygon(screen, color * 255, (pos1, pos2, pos3))
+                return 1
         
         if a.z<=-near and b.z<=-near and c.z>-near:
             acdir = (c-a)
@@ -229,8 +233,10 @@ class triangle:
             pos2 = proj(b, distance, w, h)
             pos3 = proj(bcinterpoint, distance, w, h)
             pos4 = proj(acinterpoint, distance, w, h)
-            pg.draw.polygon(screen, color * 255, (pos1, pos2, pos3, pos4))
-            return 2
+            if trianglefrustum(pos1, pos2, pos3, w, h) or trianglefrustum(pos2, pos3, pos4, w, h):
+                color = self.shade(avgpos, lightsources, ambient, plr)
+                pg.draw.polygon(screen, color * 255, (pos1, pos2, pos3, pos4))
+                return 2
         
         if a.z>-near and b.z<=-near and c.z<=-near:
             cadir = (a-c)
@@ -246,8 +252,10 @@ class triangle:
             pos2 = proj(b, distance, w, h)
             pos3 = proj(c, distance, w, h)
             pos4 = proj(cainterpoint, distance, w, h)
-            pg.draw.polygon(screen, color * 255, (pos1, pos2, pos3, pos4))
-            return 2
+            if trianglefrustum(pos1, pos2, pos3, w, h) or trianglefrustum(pos2, pos3, pos4, w, h):
+                color = self.shade(avgpos, lightsources, ambient, plr)
+                pg.draw.polygon(screen, color * 255, (pos1, pos2, pos3, pos4))
+                return 2
         
         if a.z<=-near and b.z>-near and c.z<=-near:
             abdir = (b-a)
@@ -263,8 +271,10 @@ class triangle:
             pos2 = proj(abinterpoint, distance, w, h)
             pos3 = proj(cbinterpoint, distance, w, h)
             pos4 = proj(c, distance, w, h)
-            pg.draw.polygon(screen, color * 255, (pos1, pos2, pos3, pos4))
-            return 2
+            if trianglefrustum(pos1, pos2, pos3, w, h) or trianglefrustum(pos2, pos3, pos4, w, h):
+                color = self.shade(avgpos, lightsources, ambient, plr)
+                pg.draw.polygon(screen, color * 255, (pos1, pos2, pos3, pos4))
+                return 2
         
         return 0
 
@@ -283,4 +293,4 @@ def proj(point: glm.vec3, distance: float, w: int, h: int):
     
     projectedx = -point.x / point.z * distance * w * 0.5 + w / 2
     projectedy = point.y / point.z * distance * w * 0.5 + h / 2
-    return (projectedx, projectedy)
+    return glm.vec2(projectedx, projectedy)

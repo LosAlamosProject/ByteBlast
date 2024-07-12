@@ -90,6 +90,6 @@ while running:
     pg.display.flip()
 
 if save:
-    export("C:\\Users\\User\\Downloads\\glmrenderer\\maps\\map1.txt", fillmatrix)
+    export("glmrenderer\ByteBlast\maps\map1.txt", fillmatrix)
 
 pg.quit()
