@@ -1,7 +1,9 @@
 import pygame as pg
 from levelexporter import*
 
+
 def drawgrid(n, fillmatrix):
+<<<<<<< HEAD
     d = h/(n)
     for i in range(n):
         pg.draw.line(screen, (0,0,0), (d*(i), 0), (d*(i), h))
@@ -17,6 +19,25 @@ def drawgrid(n, fillmatrix):
                 pg.draw.rect(screen, (0, 255, 0), (i*d, j*d, d+1, d+1))
             elif fillmatrix[i][j] == 4:
                 pg.draw.rect(screen, (255, 255, 0), (i*d, j*d, d+1, d+1))
+=======
+    dx = w / (n)
+    dy = h / (n)
+    for i in range(n):
+        pg.draw.line(screen, (0, 0, 0), (dx * (i), 0), (dx * (i), h))
+    for i in range(n):
+        pg.draw.line(screen, (0, 0, 0), (0, dy * (i)), (w, dy * (i)))
+    for i in range(n):
+        for j in range(n):
+            if fillmatrix[i][j] == 1:
+                pg.draw.rect(screen, (0, 0, 0), (i * dx, j * dy, dx + 1, dy + 1))
+            elif fillmatrix[i][j] == 2:
+                pg.draw.rect(screen, (255, 0, 0), (i * dx, j * dy, dx + 1, dy + 1))
+            elif fillmatrix[i][j] == 3:
+                pg.draw.rect(screen, (0, 255, 0), (i * dx, j * dy, dx + 1, dy + 1))
+            elif fillmatrix[i][j] == 4:
+                pg.draw.rect(screen, (255, 255, 0), (i * dx, j * dy, dx + 1, dy + 1))
+
+>>>>>>> 57d0a272380c60773a3547b75e817f15ddb3737c
 
 def getgridpos(mousepos, n):
     return (max(0,min(int((n)*(mousepos[0]/h)),n-1)), max(0,min(int((n)*(mousepos[1]/h)),n-1)))
@@ -61,10 +82,21 @@ while running:
                     for j in range(n):
                         if fillmatrix[i][j] == 3:
                             fillmatrix[i][j] = 0
+<<<<<<< HEAD
                 fillmatrix[mouseingrid[0]][mouseingrid[1]] = 3
             if event.key == pg.K_l:
                 fillmatrix[mouseingrid[0]][mouseingrid[1]] = 4
             if keystates[pg.K_LCTRL] and event.key == pg.K_e:
+=======
+                fillmatrix[max(0, min(int((n) * (mousepos[0] / w)), n - 1))][
+                    max(0, min(int((n) * (mousepos[1] / h)), n - 1))
+                ] = 3
+            if event.key == pg.K_l:
+                fillmatrix[max(0, min(int((n) * (mousepos[0] / w)), n - 1))][
+                    max(0, min(int((n) * (mousepos[1] / h)), n - 1))
+                ] = 4
+            if event.key == pg.K_e:
+>>>>>>> 57d0a272380c60773a3547b75e817f15ddb3737c
                 running = False
                 save = True
             if keystates[pg.K_LCTRL] and event.key == pg.K_r:
@@ -74,20 +106,42 @@ while running:
             if event.button == 1:
                 drawing = True
             elif event.button == 2:
+<<<<<<< HEAD
                 fillmatrix[mouseingrid[0]][mouseingrid[1]] = 2
+=======
+                fillmatrix[max(0, min(int((n) * (mousepos[0] / w)), n - 1))][
+                    max(0, min(int((n) * (mousepos[1] / h)), n - 1))
+                ] = 2
+>>>>>>> 57d0a272380c60773a3547b75e817f15ddb3737c
             elif event.button == 3:
                 erasing = True
-        
+
         if event.type == pg.MOUSEBUTTONUP:
             if event.button == 1:
                 drawing = False
             elif event.button == 3:
                 erasing = False
+<<<<<<< HEAD
 
     if drawing:
         fillmatrix[mouseingrid[0]][mouseingrid[1]] = 1
     if erasing:
         fillmatrix[mouseingrid[0]][mouseingrid[1]] = 0
+=======
+
+    mousepos = pg.mouse.get_pos()
+    keystates = pg.key.get_pressed()
+    currentfps = clock.get_fps()
+
+    if drawing:
+        fillmatrix[max(0, min(int((n) * (mousepos[0] / w)), n - 1))][
+            max(0, min(int((n) * (mousepos[1] / h)), n - 1))
+        ] = 1
+    if erasing:
+        fillmatrix[max(0, min(int((n) * (mousepos[0] / w)), n - 1))][
+            max(0, min(int((n) * (mousepos[1] / h)), n - 1))
+        ] = 0
+>>>>>>> 57d0a272380c60773a3547b75e817f15ddb3737c
 
     drawgrid(n, fillmatrix)
 

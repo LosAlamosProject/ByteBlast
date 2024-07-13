@@ -7,9 +7,7 @@ from renderclasses import *
 from objfiles import *
 from levelexporter import *
 
-plr = player(
-    glm.vec3(0, 5, 15), glm.vec2(0, 0), 15
-)
+plr = player(glm.vec3(0, 5, 15), glm.vec2(0, 0), 15)
 
 pg.init()
 
@@ -41,11 +39,11 @@ starttime = time.time()
     h
 )"""
 
-importmap("glmrenderer\ByteBlast\maps\map1.txt", 5, objects, plr, lightsources)
+importmap(".\maps\map1.txt", 5, objects, plr, lightsources)
 
 print(time.time() - starttime)
 
-#objects.append(triangle(glm.vec3(-5, 0, 5),glm.vec3(5, 0, 5),glm.vec3(-5, 0, -5),glm.vec3(0, 1, 0),glm.vec3(1, 1, 1),2,))  #test triangle
+# objects.append(triangle(glm.vec3(-5, 0, 5),glm.vec3(5, 0, 5),glm.vec3(-5, 0, -5),glm.vec3(0, 1, 0),glm.vec3(1, 1, 1),2,))  #test triangle
 
 ambient = light(glm.vec3(0, 0, 0), 0, glm.vec3(1, 1, 1))
 
@@ -171,7 +169,7 @@ for i in lightsources:
         )
     )
 
-objects.append(enemy(glm.vec3(0, -5, 10), 3, 1)) #the og
+objects.append(enemy(glm.vec3(0, -5, 10), 3, 1))  # the og
 
 fov = 90
 distance = 1 / mt.tan(fov / 360 * mt.pi)
