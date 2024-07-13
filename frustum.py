@@ -1,30 +1,21 @@
 import glm
 
-def badtrianglefrustum(a, b, c, fovdistance, w, h, near):
-    wdivh = w / h
-    ratey = 1 / fovdistance
-    ratex = ratey
-    tf = [1, 1, 1]
-    if not (
-        ((a.z * ratex < a.x < -a.z * ratex)
-        and (a.z * ratey < a.y * wdivh < -a.z * ratey)) and not a.z>-near
-    ):
-        tf[0] = 0
-    if not (
-        ((b.z * ratex < b.x < -b.z * ratex)
-        and (b.z * ratey < b.y * wdivh < -b.z * ratey)) and not b.z>-near
-    ):
-        tf[1] = 0
-    if not (
-        ((c.z * ratex < c.x < -c.z * ratex)
-        and (c.z * ratey < c.y * wdivh < -c.z * ratey)) and not c.z>-near
-    ):
-        tf[2] = 0
-    if sum(tf) == 0:
+def badtrianglefrustum(a, b, c, fovdistance, w, h):
+    hdivw = h / w
+    ratex = 1 / fovdistance
+    ratey = ratex*hdivw
+    if (-a.z * ratex < a.x) and (-b.z * ratex < b.x) and (-c.z * ratex < c.x):
+        return False
+    if (a.z * ratex > a.x) and (b.z * ratex > b.x) and (c.z * ratex > c.x):
+        return False
+    if (-a.z * ratey < a.y) and (-b.z * ratey < b.y) and (-c.z * ratey < c.y):
+        return False
+    if (a.z * ratey > a.y) and (b.z * ratey > b.y) and (c.z * ratey > c.y):
         return False
     return True
 
 def trianglefrustum(a, b, c, w, h):
+    return True
     if a.x>w and b.x>w and c.x>w:
         return False
     if a.x<0 and b.x<0 and c.x<0:
