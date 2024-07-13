@@ -14,7 +14,7 @@ class light:
 
 
 class player:
-    __slots__ = ("pos", "orientation", "speed", "v", "a", "sinrot", "cosrot", "rmat")
+    __slots__ = ("pos", "orientation", "speed", "v", "a", "sinrot", "cosrot", "rmat", "hp", "timedmg")
 
     def __init__(self, pos: glm.vec3, orientation: glm.vec2, speed: float):
         self.pos = pos
@@ -33,8 +33,11 @@ class player:
             [-sin_a * sin_b, cos_b, -cos_a * sin_b],
             [sin_a * cos_b, sin_b, cos_a * cos_b],
         )
+        self.hp = 100
+        self.timedmg = 0
 
     def update(self, dt):
+        self.timedmg += dt
         self.v += self.a * dt / 2
         self.pos += self.v * dt
         self.v += self.a * dt / 2
@@ -64,6 +67,8 @@ class enemy:
         "texsize",
         "center",
         "maxsize",
+        "hp",
+        "timedmg"
     )
 
     def __init__(self, pos: glm.vec3, speed: float, type: int):
@@ -71,10 +76,12 @@ class enemy:
         self.speed = speed
         self.type = type
         self.facing = glm.vec3(1, 0, 0)
-        self.texture = pg.image.load("glmrenderer\ByteBlast\images\demon.png")
+        self.texture = pg.image.load(".\\ByteBlast\\images\\demon.png")
         self.texture = pg.transform.scale(self.texture, (500, 500))
         self.texsize = glm.vec2(500, 500)
         self.center = pos.z
+        self.hp = 100
+        self.timedmg = 0
 
     def draw(
         self,
@@ -112,6 +119,7 @@ class enemy:
             plr.pos - self.pos - 2 * glm.normalize(plr.pos - self.pos)
         )
         self.pos += self.facing * self.speed * dt
+        self.timedmg += dt
 
     def mintest(self):
         return self.center

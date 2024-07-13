@@ -7,7 +7,7 @@ from renderclasses import *
 from objfiles import *
 from levelexporter import *
 
-plr = player(glm.vec3(0, 5, 15), glm.vec2(0, 0), 15)
+plr = player(glm.vec3(0, 5, 15), glm.vec2(0, 0), 150)
 
 pg.init()
 
@@ -39,7 +39,7 @@ starttime = time.time()
     h
 )"""
 
-importmap(".\maps\map1.txt", 5, objects, plr, lightsources)
+importmap(".\\ByteBlast\\maps\\map1.txt", 5, objects, plr, lightsources)
 
 print(time.time() - starttime)
 
@@ -240,7 +240,7 @@ while running:
         renderedtrianglecount += i.draw(
             screen, plr, distance, w, h, lightsources, ambient, near
         )
-        # i.update(dt, plr)
+        i.update(dt, plr)
 
     text = font.render(str(round(currentfps, 2)) + " fps", True, (255, 255, 255))
     screen.blit(text, (0, 0))
