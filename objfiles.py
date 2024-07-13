@@ -1,4 +1,5 @@
-from renderclasses import*
+from renderclasses import *
+
 
 def nthvn(n: int, l):
     counter = 0
@@ -32,7 +33,14 @@ def getvec3fromstr(string: str):
 
 
 def importfile(
-    path: str, rotation=glm.vec3(0, 0, 0), pos=glm.vec3(0, 0, 0), triangles=None, refl=32, screen = pg.surface.Surface, w=int, h=int
+    path: str,
+    rotation=glm.vec3(0, 0, 0),
+    pos=glm.vec3(0, 0, 0),
+    triangles=None,
+    refl=32,
+    screen=pg.surface.Surface,
+    w=int,
+    h=int,
 ):
     errors = False
     if triangles == None:
@@ -59,7 +67,7 @@ def importfile(
                 if j in digits:
                     nums[ind] += j
                 elif j == "/" or j == " ":
-                    if nums[ind] == '':
+                    if nums[ind] == "":
                         nums[ind] = 0
                     nums[ind] = int(nums[ind])
                     ind += 1

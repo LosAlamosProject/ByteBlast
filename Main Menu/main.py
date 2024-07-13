@@ -46,9 +46,12 @@ class Button:
 def map1():
     global mapa
     mapa = 1
+
+
 def map2():
     global mapa
     mapa = 2
+
 
 def otvorikofi():
     webbrowser.open("https://ko-fi.com/markonije")
@@ -101,7 +104,8 @@ map2 = Button(
     text="Map 2",
     font=med1,
     pos=(window.get_width() // 2 - med1.size("Map 2")[0] // 2, 325),
-    action=map2,)
+    action=map2,
+)
 
 
 def drawCredits(window):
@@ -151,7 +155,9 @@ def drawMapPicker(window):
     titlec = xbold.render("Map Picker", True, (255, 255, 255))
     map1.draw(window)
     map2.draw(window)
-    window.blit(titlec, (window.get_width() // 2 - xbold.size("Map Picker")[0] // 2, 50))
+    window.blit(
+        titlec, (window.get_width() // 2 - xbold.size("Map Picker")[0] // 2, 50)
+    )
     back.draw(window)
 
 
@@ -188,7 +194,7 @@ while True:
         drawCredits(window)
     if mapPicker:
         drawMapPicker(window)
-    if mapa !=0:
+    if mapa != 0:
         print(mapa)
 
     pygame.display.update()
