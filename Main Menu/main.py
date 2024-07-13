@@ -6,11 +6,11 @@ import typing
 pygame.init()
 window = pygame.display.set_mode((800, 600), pygame.RESIZABLE, pygame.SRCALPHA)
 pygame.display.set_caption("ByteBlast")
-pygame.display.set_icon(pygame.image.load("assets/icon.png").convert_alpha())
-xbold = pygame.font.Font("fonts/Orbitron-ExtraBold.ttf", 90)
-med = pygame.font.Font("fonts/Orbitron-Medium.ttf", 17)
-med1 = pygame.font.Font("fonts/Orbitron-Medium.ttf", 30)
-bg = pygame.image.load("assets/bg.jpg")
+pygame.display.set_icon(pygame.image.load("glmrenderer\\ByteBlast\\Main Menu\\assets\\icon.png").convert_alpha())
+xbold = pygame.font.Font("glmrenderer\\ByteBlast\\Main Menu\\fonts\\Orbitron-ExtraBold.ttf", 90)
+med = pygame.font.Font("glmrenderer\\ByteBlast\\Main Menu\\fonts\\Orbitron-Medium.ttf", 17)
+med1 = pygame.font.Font("glmrenderer\\ByteBlast\\Main Menu\\fonts\\Orbitron-Medium.ttf", 30)
+bg = pygame.image.load("glmrenderer\\ByteBlast\\Main Menu\\assets\\bg.png")
 global credits
 credits = False
 global mapPicker
@@ -156,6 +156,8 @@ def drawMapPicker(window):
 
 
 while True:
+    w, h = window.get_size()
+    bg = pygame.transform.scale(bg, (w, h))
     window.blit(bg, (0, 0))
     title = xbold.render("ByteBlast", True, (255, 255, 255))
     authors = med.render(

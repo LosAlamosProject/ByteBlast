@@ -275,7 +275,6 @@ class triangle:
                 color = self.shade(avgpos, lightsources, ambient, plr)
                 pg.draw.polygon(screen, color * 255, (pos1, pos2, pos3, pos4))
                 return 2
-        
         return 0
 
     def update(self, dt, plr):
